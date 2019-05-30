@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Form\AnnonceType;
 use App\Repository\AdRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +28,30 @@ class AdController extends AbstractController
             ]);
     }
 
+    /**
+     * affiche un formulaire pour creer une nouvelle annonce
+     *@Route("/ad/creation", name="ad_create")
+     * @return Response
+     */
+    public function createAd(objectManager $manager, Request $request)
+    {
+        $ad = new Ad();
+        $form = $this->createForm(AnnonceType::class, $ad);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $manager->persist($ad);
+            $manager->flush();
+
+            return $this->redirectToRoute("ad_one", ["slug" => $ad->getSlug()]);
+        }
+
+        return $this->render("/ad/formulaire_creation.html.twig",[
+            "formAd" => $form->createView() 
+        ]);
+    }
 
     /**
      * fonction qui permet d'afficher l'annonce sélectionné
@@ -40,4 +66,5 @@ class AdController extends AbstractController
             "ad"=>$ad
             ]);
     }
+
 }
