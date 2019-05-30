@@ -6,6 +6,37 @@
 
 {% block body %}
 
-    <h1>{{ad.title}} </h1>
+    <div class="ad_title" style="background-image: url( {{ad.coverImage}} )">
+        <div class="container">
+            <h1>{{ad.title}} </h1>
+            <p>{{ad.introduction}} </p>
+            <p class="h2">
+                <strong> {{ad.rooms}} chambres</strong> pour <strong> {{ad.price}}&euro;</strong> par nuit
+            </p>
+            <a href="#" class="btn btn-primary">Réserver !</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                {{ad.content|raw}}
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="http://placehold.it/64x64" alt="">
+                    </div>
+                    <div class="col">
+                        <h3>benoit Vaisse</h3>
+                        <span class="badge badge-primary"> 3 annonces </span>
+                    </div>
+                </div>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias ducimus voluptatibus adipisci sunt, dolorem pariatur libero officiis doloribus commodi sit.</p>
+                <p>Debitis eaque dicta odio dignissimos facere temporibus laudantium, voluptatum eius, dolore sit dolor eligendi ut cum iure, aliquid reiciendis beatae.</p>
+                <p>Amet repudiandae repellendus harum perferendis dolor omnis quibusdam, mollitia quas, cum ut, praesentium voluptas eos eum fuga magni quam quasi!</p>
+            </div>
+        </div>
+    </div>
+    
 
 {% endblock %}

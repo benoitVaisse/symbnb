@@ -1,4 +1,16 @@
-.ad 
+div.ad_title
 {
-    min-height: 450px ;
+    padding : 2em;
+    background-size: cover;
+    background-position: center center;
+}
+
+div.ad_title h1, div.ad_title p{
+    color:white;
+    text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+
+div.container
+{
+    margin-top : 20px;
 }
