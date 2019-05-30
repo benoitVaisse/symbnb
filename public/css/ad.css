@@ -7,10 +7,15 @@ div.ad_title
 
 div.ad_title h1, div.ad_title p{
     color:white;
-    text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.7);
 }
 
 div.container
 {
     margin-top : 20px;
+}
+
+div.carousel-caption{
+    color:white;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.7);
 }
