@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Ad;
+use App\Form\ImageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AnnonceType extends AbstractType
 {
@@ -41,6 +43,9 @@ class AnnonceType extends AbstractType
             ->add('coverImage', UrlType::class, $this->createAttr("Url de l'image", "Mettre l'url de l'image", "form-control"))
             ->add('rooms', IntegerType::class,$this->createAttr("Nombre de chambre", "Indiquez le nombre de chambre de votre appartement", "form-control"))
             ->add('price', MoneyType::class, $this->createAttr("Prix par nuit", "Veuillez indiquer le prix pour uen nuit", "form-control"))
+            ->add('images', CollectionType::class, ["entry_type"=>ImageType::class,
+                                                    "allow_add"=>true
+                                                    ])
         ;
     }
 

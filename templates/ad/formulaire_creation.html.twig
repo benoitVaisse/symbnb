@@ -1,5 +1,8 @@
 {% extends "base.html.twig" %}
+
 {% block title %} création d'une annonce {% endblock %}
+
+{%  form_theme formAd _self %}
 
 {% block body %}
 
@@ -16,6 +19,7 @@
                 {{ form_row(formAd.coverImage) }}
                 {{ form_row(formAd.rooms) }}
                 {{ form_row(formAd.price) }}
+                {{ form_row(formAd.images) }}
 
                 <input type="submit" value="crée la nouvelle annonce" class="btn btn-success">
 
@@ -23,5 +27,65 @@
             {{ form_end(formAd) }}
 
     </div>
+
+{% endblock %}
+
+{% block _annonce_images_entry_row %}
+
+    {{form_widget(form)}}
+
+{% endblock %}
+
+{% block _annonce_images_widget %}
+
+    <h5>Ici, vous pouvez ajouter vos images pour votre annnoce !</h4>
+
+    {{ form_widget(form) }}
+
+    <div class="row">
+        <div class="col-md-9"></div>
+        <button type="button" class="btn btn-primary col-md-3" id="add_image">Ajouter une image</button>
+    </div>
+
+{% endblock %}
+
+
+
+{% block _annonce_images_entry_widget %}
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col">
+                {{form_widget(form.url)}}
+            </div>
+            <div class="col">
+                {{form_widget(form.caption)}}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script>
+
+    $("#add_image").click(function(){
+
+        // je récupère le nombre d'image ajouté
+        let index = $("#annonce_images div.form-group").length;
+
+        // je récupère le prototype du formulaire des images
+        let templateImage = $("#annonce_images").data("prototype").replace(/__name__/g, index); 
+
+        // j'intecte le prototype dans le fsomulaire
+        $("#annonce_images").append(templateImage);
+
+
+
+    });
+
+</script>
 
 {% endblock %}
