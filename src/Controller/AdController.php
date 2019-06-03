@@ -39,12 +39,17 @@ class AdController extends AbstractController
         $form = $this->createForm(AnnonceType::class, $ad);
 
         $form->handleRequest($request);
+        
 
         if($form->isSubmitted() && $form->isValid())
         {
             $manager->persist($ad);
             $manager->flush();
 
+            $this->addFlash(
+                "success",
+                "l'annonce <sontrg>".$ad->getTitle()."</strong> a bien été ajoutée !"
+            );
             return $this->redirectToRoute("ad_one", ["slug" => $ad->getSlug()]);
         }
 

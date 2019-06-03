@@ -8,6 +8,7 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        {% include "flashes.html.twig" %}
         {% include "navigation.html.twig" %}
         {% block body %}{% endblock %}
         <script src="/js/jquery.min.js"></script>
