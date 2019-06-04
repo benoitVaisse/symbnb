@@ -1,13 +1,13 @@
 {% extends "base.html.twig" %}
 
-{% block title %} création d'une annonce {% endblock %}
+{% block title %} Modification d'une annonce {% endblock %}
 
 {%  form_theme formAd "ad/_themeCollection.html.twig" %}
 
 {% block body %}
 
     <div class="container">
-        <h1>Création d'une annonce</h1>
+        <h1>Modification d'une annonce</h1>
 
         
         {{ form_start(formAd) }}
@@ -21,7 +21,7 @@
                 {{ form_row(formAd.price) }}
                 {{ form_row(formAd.images) }}
 
-                <input type="submit" value="crée la nouvelle annonce" class="btn btn-success">
+                <input type="submit" value="Modifier l'annonce" class="btn btn-success">
 
             </div>
             {{ form_end(formAd) }}
@@ -30,6 +30,9 @@
 
 {% endblock %}
 
+
 {% block javascripts %}
-    <script src="/js/ad.js"></script>
+
+<script src="/js/ad.js"></script>
+
 {% endblock %}

@@ -56,7 +56,7 @@ class AdController extends AbstractController
 
             $this->addFlash(
                 "success",
-                "l'annonce <sontrg>".$ad->getTitle()."</strong> a bien été ajoutée !"
+                "l'annonce <strong>".$ad->getTitle()."</strong> a bien été ajoutée !"
             );
             return $this->redirectToRoute("ad_one", ["slug" => $ad->getSlug()]);
         }
@@ -80,4 +80,36 @@ class AdController extends AbstractController
             ]);
     }
 
+
+    /**
+     * permet d'afficher le formulaire d'édition d'une annonce
+     *@Route("/ad/{slug}/edit", name="ad_edit")
+     * @return Response
+     */
+    public function editAd(Ad $ad, Request $request, ObjectManager $manager)
+    {
+
+        $form = $this->createForm(AnnonceType::class, $ad);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            foreach($ad->getImages() as $image)
+            {
+                $image->setAd($ad);
+                $manager->persist($image);
+            }
+            $manager->persist($ad);
+            $manager->flush();
+
+            $this->addFlash(
+                "success",
+                "Les modifications de l'annonce <strong>".$ad->getTitle()."</strong> ont bien été enregistrées !"
+            );
+            return $this->redirectToRoute("ad_one", ["slug" => $ad->getSlug()]);
+        }
+
+        return $this->render("/ad/formulaire_edition.html.twig", [
+            "formAd"=>$form->createView(),
+        ]);
+    }
 }

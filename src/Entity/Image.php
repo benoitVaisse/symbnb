@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
@@ -18,11 +19,13 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url(message="Le lien doit être une URL")
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=10, max=150, minMessage="Votre légende dois faire plus de  10 caractères", maxMessage="Votre légende dois faire moin de 150 caractères")
      */
     private $caption;
 
