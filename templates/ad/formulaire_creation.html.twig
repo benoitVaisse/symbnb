@@ -42,6 +42,7 @@
 
     {{ form_widget(form) }}
 
+    <input type="hidden" id="widgets_counter" value="0">
     <div class="row">
         <div class="col-md-9"></div>
         <button type="button" class="btn btn-primary col-md-3" id="add_image">Ajouter une image</button>
@@ -53,13 +54,16 @@
 
 {% block _annonce_images_entry_widget %}
 
-    <div class="form-group">
+    <div class="form-group" id="block_{{id}}">
         <div class="row">
-            <div class="col">
+            <div class="col-md-5">
                 {{form_widget(form.url)}}
             </div>
-            <div class="col">
+            <div class="col-md-5">
                 {{form_widget(form.caption)}}
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger" data-action='delete' data-target="#block_{{id}}">X</button>
             </div>
         </div>
     </div>
@@ -74,17 +78,33 @@
     $("#add_image").click(function(){
 
         // je récupère le nombre d'image ajouté
-        let index = $("#annonce_images div.form-group").length;
+        let index = +$("#widgets_counter").val();
 
+        console.log(index);
         // je récupère le prototype du formulaire des images
         let templateImage = $("#annonce_images").data("prototype").replace(/__name__/g, index); 
 
         // j'intecte le prototype dans le fsomulaire
         $("#annonce_images").append(templateImage);
 
+        $("#widgets_counter").val(index+1)
 
+        handleDeleteButton();
 
     });
+
+    function handleDeleteButton()
+    {
+        $("button[data-action='delete']").click(function(){
+
+            const target = this.dataset.target;
+            console.log(target);
+            $(target).remove();
+
+        });
+    }
+
+    handleDeleteButton();
 
 </script>
 

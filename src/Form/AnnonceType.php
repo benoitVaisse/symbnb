@@ -44,7 +44,8 @@ class AnnonceType extends AbstractType
             ->add('rooms', IntegerType::class,$this->createAttr("Nombre de chambre", "Indiquez le nombre de chambre de votre appartement", "form-control"))
             ->add('price', MoneyType::class, $this->createAttr("Prix par nuit", "Veuillez indiquer le prix pour uen nuit", "form-control"))
             ->add('images', CollectionType::class, ["entry_type"=>ImageType::class,
-                                                    "allow_add"=>true
+                                                    "allow_add"=>true,
+                                                    "allow_delete"=>true
                                                     ])
         ;
     }

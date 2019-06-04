@@ -37,11 +37,20 @@ class AdController extends AbstractController
     public function createAd(objectManager $manager, Request $request)
     {
         $ad = new Ad();
+        // $img = new Image();
+        // $img->setUrl("url numero 1")
+        //     ->setCaption("description 1");
         
+        // $ad->addImage($img);
         $form = $this->createForm(AnnonceType::class, $ad);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
+            foreach($ad->getImages() as $image)
+            {
+                $image->setAd($ad);
+                $manager->persist($image);
+            }
             $manager->persist($ad);
             $manager->flush();
 
