@@ -4,32 +4,78 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use Faker\Factory;
+use App\Entity\User;
 use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr-FR');
+
+        // nous creons les utilisateurs
+
+        $genres = ["male","female"];
+        $users = [];
+        for($i=1; $i<=10; $i++)
+        {
+            $user = new User();
+            $content = "<p>".join("</p><p>",$faker->paragraphs(3))."</p>";
+
+            $genre = $genres[mt_rand(0,1)];
+
+            $picture = "https://randomuser.me/api/portraits/";
+            $picture = $picture . ($genre == "male" ? "men/" : "women/" ). mt_rand(1,99) . ".jpg";
+            $hash = $this->encoder->encodePassword($user, "password");
+            $user->setFirstName($faker->firstname($genre))
+                 ->setLastName($faker->lastname($genre))
+                 ->setEmail($faker->email)
+                 ->setIntroduction($faker->sentence())
+                 ->setDescription($content)
+                 ->setHash($hash)
+                 ->setPicture($picture);
+
+            $manager->persist($user);
+            $users[] = $user;
+        }
+
+        // nous creons les annonces
         for($i=1; $i<=30;$i++)
         {
+
             $ad = new Ad();
             $title = $faker->sentence(6);
             $coverImage = $faker->imageUrl(1000,350);
             $introduction = $faker->paragraph(2);
             $content = "<p>".join("</p><p>",$faker->paragraphs(5))."</p>";
+
+            // je prend un utlisateur au hasard de la bdd
+            $user = $users[mt_rand(0,count($users) - 1)];
+
             $ad->setTitle($title)
                 ->setCoverImage($coverImage)
                 ->setIntroduction($introduction)
                 ->setContent($content)
                 ->setPrice(mt_rand(40,200))
-                ->setRooms(mt_rand(1,6));
+                ->setRooms(mt_rand(1,6))
+                ->setUser($user);
     
     
                 
             $nbImage = mt_rand(3,5);
+
+            // nous creons les images
             for($j = 1; $j<=$nbImage ; $j++)
             {
                 $image  = new Image();
