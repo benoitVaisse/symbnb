@@ -18,13 +18,4 @@ class HomePageController extends AbstractController
         return $this->render('home_page/index.html.twig', []);
     }
 
-    /**
-     * 
-     *
-     * @return reponse
-     */
-    public function showAd()
-    {
-
-    }
 }
