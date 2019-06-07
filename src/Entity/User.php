@@ -7,10 +7,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(
+ *      fields={"email"},
+ *      message =" Cette email est déjà utilié, veuillez choisir une nouvelle adresse mail"
+ * )
  */
 class User implements UserInterface
 {
@@ -23,36 +29,49 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner votre prénom")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner votre nom de famille")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="Veuillez renseigner une adresse mail valide ( {{ value }}  n'est pas valide )")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(message="Veuillez renseigner une Url valide")
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=5, minMessage="Votre mot de passe dois faire au moin 5 caractères !")
+     * @Assert\NotBlank(message="le mot de passe ne dois pas etre vide")
      */
     private $hash;
 
     /**
+     * @Assert\EqualTo(propertyPath="hash", message="Vous n'avez pas confirmé correctement votre mot de passe !")
+     */
+    public $confirmHash;
+
+    /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\Length(min=10, minMessage="Votre introduction dois faire au moin 10 caractères !")
      */
     private $introduction;
 
     /**
      * @ORM\Column(type="text")
+     *  @Assert\Length(min=50, minMessage="Votre description dois faire au moin 50 caractères !")
      */
     private $description;
 

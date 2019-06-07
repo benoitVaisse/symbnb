@@ -23,6 +23,7 @@ class RegistrationType extends ApplicationType
             ->add('email', EmailType::class, $this->createAttr("Email", "Votre adresse web ..."))
             ->add('picture', UrlType::Class, $this->createAttr("Avatar", "Lien de l'image de votre avatar"))
             ->add('hash', PasswordType::class, $this->createAttr("Password", "Votre mot de passe ......"))
+            ->add("confirmHash", PasswordType::class, $this->createAttr("Confirmer votre password", "confirmation du mot de passe ..."))
             ->add('introduction', TextType::class, $this->createAttr("introduction","Une petite introduction pour vous présenter brièvement..."))
             ->add('description', TextareaType::class, $this->createAttr("Description", "Présenté vous en détails...."))
         ;
