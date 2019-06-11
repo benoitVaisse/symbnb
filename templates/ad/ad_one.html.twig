@@ -53,17 +53,19 @@
             </div>
             <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-4">
-                        <img src="http://placehold.it/64x64" alt="">
+                    <div class="col-md-6 avatar">
+                        <a href="{{path('user_show', {'slug': ad.user.slug} ) }}">
+                            <img src="{{ ad.user.picture }}" alt="" class="avatar-middle">
+                        </a>
                     </div>
                     <div class="col">
-                        <h3>benoit Vaisse</h3>
-                        <span class="badge badge-primary"> 3 annonces </span>
+                        <a href="{{path('user_show', {'slug': ad.user.slug} ) }}">
+                            <h3>{{ ad.user.fullName }}</h3>
+                        </a>
+                        <span class="badge badge-primary"> {{ ad.user.ads|length }} Annonce(s) </span>
                     </div>
                 </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias ducimus voluptatibus adipisci sunt, dolorem pariatur libero officiis doloribus commodi sit.</p>
-                <p>Debitis eaque dicta odio dignissimos facere temporibus laudantium, voluptatum eius, dolore sit dolor eligendi ut cum iure, aliquid reiciendis beatae.</p>
-                <p>Amet repudiandae repellendus harum perferendis dolor omnis quibusdam, mollitia quas, cum ut, praesentium voluptas eos eum fuga magni quam quasi!</p>
+                {{ ad.user.description | raw}}
             </div>
         </div>
     </div>

@@ -10,20 +10,7 @@
         <div class="row">
 
             {% for ad in ads %}
-                {% set urlAd = path('ad_one', {'slug':ad.slug}) %}
-                <div class="col-md-4">
-                    <div class="card bg-light mb-3">
-                        <div class="card-header"> {{ad.rooms}} chambres <strong> {{ad.price}}&euro; par nuit</strong></div>
-                        <div class="card-body">
-                            <h4 class="card-title">{{ad.title}}</h4>
-                            <a href="{{urlAd }}">
-                                <img src="{{ad.coverImage}}" alt="" style="width: 100%;">
-                            </a>
-                            <p class="card-text">{{ad.introduction|raw}}</p>
-                            <a href="{{urlAd}}" class="btn btn-secondary mb-auto">Voir l'annonce</a>
-                        </div>
-                    </div>
-                </div>  
+                {% include "ad/_ad.html.twig" %}
             
             {% endfor %}
         </div>

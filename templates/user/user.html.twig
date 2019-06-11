@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{user.fullName}}{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center mb-4">{{user.fullName}}</h1>
+            {% if user is same as (app.user) %}
+                <div class="row">
+                    <div class="col-md-1 my-3"></div>
+                    <a href=" {{path('account_edit')}} " class="btn btn-primary col-md-4 my-3"> Modifier le Profil </a>
+                    <div class="col-md-2 my-3"></div>
+                    <a href=" {{path('account_reset_password')}} " class="btn btn-primary col-md-4 my-3"> Modifier le password </a>
+                    <div class="col-md-1 my-3"></div>
+                </div>
+            {% endif %}
+            <div class="row items-align-center mb-5">
+                <div class="col-md-3 text-center">
+                    <img src="{{user.picture}}" alt="" class="mb-3 avatar">
+                    <br>
+                    <span class="alert alert-primary"> {{ user.ads|length }} Annonce(s)</span>
+                    
+                </div>
+                <div class="col-md-9">
+                    {{user.description|raw}}
+                </div>
+            </div>
+            <hr>
+
+            <h1 class="my-5">Liste des Annonces de {{user.fullName }}</h1>
+            {% if user.ads|length > 0 %}
+                <div class="row">
+                    {% for ad in user.ads %}
+                        {% include "ad/_ad.html.twig" %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    <p> <strong> {{ user.fullName }}</strong> ne possède pas encore d'annonce </p>
+                </div>
+            {% endif %}
+        </div>
+    
+    </div>
+
+{% endblock %}
