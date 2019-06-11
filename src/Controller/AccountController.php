@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -88,6 +89,7 @@ class AccountController extends AbstractController
      * permet d'afficher le formualire d"édition du profile utilisateur et de le traiter
      *
      * @Route("/account/edit", name="account_edit")
+     * @IsGranted("ROLE_USER")
      * @param Request $request
      * @param ObjectManager $manager
      * @return void
@@ -116,6 +118,7 @@ class AccountController extends AbstractController
      *
      * @Route("/account/reset-password", name="account_reset_password")
      * 
+     * @IsGranted("ROLE_USER")
      * @param Request $request
      * @param ObjectManager $manager
      * @param UserPasswordEncoderInterface $encoder
@@ -156,6 +159,7 @@ class AccountController extends AbstractController
      * permet d'afficher le profil de l'utilisateur connecté
      *
      * @Route("/account", name="account_user")
+     * @IsGranted("ROLE_USER")
      * @return Response
      */
     public function myAccount()

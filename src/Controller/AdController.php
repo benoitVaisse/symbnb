@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
@@ -32,6 +34,7 @@ class AdController extends AbstractController
     /**
      * affiche un formulaire pour creer une nouvelle annonce
      *@Route("/ad/creation", name="ad_create")
+     *@IsGranted("ROLE_USER", statusCode=404, message="Veuillez vous Connecter pour créer une Annonce")
      * @return Response
      */
     public function createAd(objectManager $manager, Request $request)
@@ -84,7 +87,8 @@ class AdController extends AbstractController
 
     /**
      * permet d'afficher le formulaire d'édition d'une annonce
-     *@Route("/ad/{slug}/edit", name="ad_edit")
+     * @Route("/ad/{slug}/edit", name="ad_edit")
+     * @Security ("is_granted('ROLE_USER') and user == ad.getUser()")
      * @return Response
      */
     public function editAd(Ad $ad, Request $request, ObjectManager $manager)
