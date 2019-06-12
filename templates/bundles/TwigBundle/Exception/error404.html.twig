@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Page nor found ! {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1 class="my-5"> Oups Désolé !! La page demandé n'existe pas !! </h1>
+        <p class="my-5">La requête demandé n'existe pas, vous avez dû être mal renseigné !! <br>
+            Vous pouvez toujours retourner sur la page d'acceuil ou la liste de nos annonces !!
+        </p>
+
+        <div class="row my-5">
+            <a class="col-md-1"></a>
+            <a href="{{path('home_page')}}" class="btn btn-primary col-md-4">Page d'accueil</a>
+            <a class="col-md-2"></a>
+            <a href="{{path('ads_liste')}}" class="btn btn-success col-md-4">Liste de nos annonces</a>
+            <a class="col-md-1"></a>
+        </div>
+
+    </div>
+
+{% endblock %}

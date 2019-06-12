@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Page nor found ! {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1 class="my-5"> Vous n'aez pas le droit d'acceder a cette Ressource !! </h1>
+        <div class="alert alert-danger">
+            <p>Vous ne pouvez pas accedé a la requete demandé, Vous n'en avez pas les droits</p>
+        </div>
+        <div class="row my-5">
+            <a class="col-md-1"></a>
+            <a href="{{path('home_page')}}" class="btn btn-primary col-md-4">Page d'accueil</a>
+            <a class="col-md-2"></a>
+            <a href="{{path('ads_liste')}}" class="btn btn-success col-md-4">Liste de nos annonces</a>
+            <a class="col-md-1"></a>
+        </div>
+
+    </div>
+
+{% endblock %}
