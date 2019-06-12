@@ -117,4 +117,25 @@ class AdController extends AbstractController
             "formAd"=>$form->createView(),
         ]);
     }
+
+    /**
+     * permet de supprimer une annonce
+     * @Route("/ad/{slug}/delete", name="ad_delete")
+     * @param Ad $ad
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function deleteAd(Ad $ad, ObjectManager $manager)
+    {
+        $user = $this->getUser();
+
+        $this->addFlash("success", "L'annonce <strong>".$ad->getTitle()."</strong> a bien été surpprimée");
+
+        $manager->remove($ad);
+        $manager->flush();
+
+        return $this->render("/user/user.html.twig",[
+            "user" => $user
+        ]);
+    }
 }

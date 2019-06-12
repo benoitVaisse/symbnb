@@ -35,3 +35,14 @@ function updateCounter()
 
 handleDeleteButton();
 updateCounter();
+
+
+// fonction qui affiche la modal pour supprimer uen annonce
+
+$("#modalAdDelete").on("show.bs.modal", function(e){
+    const href = $("#confirmDelete").data("href");
+    const title = $("#confirmDelete").data("name");
+
+    $("#adName").html(title);
+    $("#btn-delete").attr("href",href);
+})

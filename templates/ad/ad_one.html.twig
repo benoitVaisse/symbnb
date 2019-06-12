@@ -16,6 +16,7 @@
             <a href="#" class="btn btn-primary">Réserver !</a>
             {% if app.user and app.user == ad.user %}
                 <a class="btn btn-warning" href="{{ path('ad_edit', {'slug' : ad.slug }) }}"> Modifier l'annonce</a>
+                <a href="#" data-name="{{ad.title}}" data-href="{{path('ad_delete', {'slug': ad.slug}) }}" class="btn btn-danger" id="confirmDelete" data-toggle="modal" data-target="#modalAdDelete">Supprimer l'annonce</a>
             {% endif %}
         </div>
     </div>
@@ -72,6 +73,33 @@
             </div>
         </div>
     </div>
+
+    {# modal de confirmation pour supprimer une annonce #}
+
+    <div class="modal fade" id="modalAdDelete" tabindex="-1" role="dialog" aria-labelledby="modalAdDelete" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" >Suppression de l'annonce <strong id="adName"></strong></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Etes vous sûr de vouloir supprimer cette annonce ? 
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Ne pas supprimer</button>
+              <a class="btn btn-danger text-white" id="btn-delete">Supprimer</a>
+            </div>
+          </div>
+        </div>
+    </div>
     
 
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="/js/ad.js"></script>
 {% endblock %}
