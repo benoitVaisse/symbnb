@@ -7,6 +7,7 @@ use Faker\Factory;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Image;
+use App\Entity\Booking;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -98,7 +99,7 @@ class AppFixtures extends Fixture
     
                 
             $nbImage = mt_rand(3,5);
-
+            
             // nous creons les images
             for($j = 1; $j<=$nbImage ; $j++)
             {
@@ -109,6 +110,36 @@ class AppFixtures extends Fixture
                 
                 $manager->persist($image);
             }
+            
+            $nbBooking = mt_rand(0,10);
+            for($j = 0; $j < $nbBooking; $j++)
+            {
+                $booking = new Booking();
+                $date = new \DateTime();
+
+                $createdAt = $date->modify("-3 months");
+                $startDate = $date->modify("-6 months");
+
+                // la date de fin 
+                $days = mt_rand(1,7);
+                $endDate = (clone $startDate)->modify("+".$days." days");
+
+                $user = $users[mt_rand(0, count($users)-1)];
+
+                $comment = $faker->paragraph();
+                $amount = $ad->getPrice() * $days;
+
+                $booking->setCreatedAt($createdAt)
+                        ->setStartDate($startDate)
+                        ->setEndDate($endDate)
+                        ->setUser($user)
+                        ->setAd($ad)
+                        ->setComment($comment)
+                        ->setAmount($amount);
+
+                $manager->persist($booking);
+            }
+
             $manager->persist($ad);
         }
 
