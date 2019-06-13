@@ -13,7 +13,7 @@
             <p class="h2">
                 <strong> {{ad.rooms}} chambres</strong> pour <strong> {{ad.price}}&euro;</strong> par nuit
             </p>
-            <a href="#" class="btn btn-primary">Réserver !</a>
+            <a href=" {{path('ad_book', {'slug':ad.slug})}} " class="btn btn-primary">Réserver !</a>
             {% if app.user and app.user == ad.user %}
                 <a class="btn btn-warning" href="{{ path('ad_edit', {'slug' : ad.slug }) }}"> Modifier l'annonce</a>
                 <a href="#" data-name="{{ad.title}}" data-href="{{path('ad_delete', {'slug': ad.slug}) }}" class="btn btn-danger" id="confirmDelete" data-toggle="modal" data-target="#modalAdDelete">Supprimer l'annonce</a>
