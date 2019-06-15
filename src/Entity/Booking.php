@@ -72,6 +72,11 @@ class Booking
 
     }
 
+    /**
+     * Permet de calculer le nombre de jours entre 2 date
+     *
+     * @return int
+     */
     public function getNumberDays()
     {
         $days = $this->endDate->diff($this->startDate)->d; 
