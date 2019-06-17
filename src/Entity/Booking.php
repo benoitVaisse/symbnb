@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,11 +33,13 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date()
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime")
+     *  @Assert\Date()
      */
     private $endDate;
 
@@ -51,6 +55,7 @@ class Booking
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
      */
     private $comment;
 
