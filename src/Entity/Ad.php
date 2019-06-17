@@ -262,4 +262,35 @@ class Ad
 
         return $this;
     }
+
+    // ------------------ fonctions rajoutés ------------------//
+
+    /**
+     * On recupere les jour deja reserver pour l'annonce selectionné
+     *
+     * @return array retourne un table d'objet date
+     */
+    public function getUnavailableDays()
+    {
+        $bookings = $this->bookings;
+        $notAvailabkesDays = [];
+        
+        foreach($bookings as $booking)
+        {
+            $resultat = range(
+                $booking->getStartDate()->getTimestamp(),
+                $booking->getEndDate()->getTimestamp(),
+                24*60*60);
+
+            $days = array_map(function($day){
+                return new \DateTime(date("Y-m-d", $day));
+            }, $resultat);
+
+            $notAvailabkesDays = array_merge($notAvailabkesDays, $days);
+
+        }
+
+        return $notAvailabkesDays;
+
+    }
 }

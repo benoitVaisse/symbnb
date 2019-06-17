@@ -33,13 +33,13 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\Date()
+     * @Assert\Date(message="La date d'arrivée doit être au bon format")
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime")
-     *  @Assert\Date()
+     *  @Assert\Date(message="La date d'arrivée doit être au bon format")
      */
     private $endDate;
 
@@ -176,4 +176,57 @@ class Booking
 
         return $this;
     }
+
+    // ------------------ fonctions rajoutés ------------------//
+
+
+    /**
+     * on récupere les jours selectionné lors de la reservation
+     *
+     * @return array retourne un tableau d'objets de type dateTime des jour qui vienne d'être reservée pour cette annonce
+     */
+    public function getDays()
+    {
+        $resultat = range($this->startDate->getTimestamp(), $this->endDate->getTimestamp(), 24*60*60);
+
+        $days = array_map(function($day){
+            return new \DateTime(date("y-m-d", $day));
+        }, $resultat);
+
+        return $days;
+
+
+    }
+
+    public function isBookableDate()
+    {
+        // on récupere les jours qui ne sont pas valide
+        $notAvailableDays = $this->ad->getUnavailableDays();
+
+        // on regarde si les jours selectionnés lors de la reservation sont dans les jours indisponibles
+        // on recupere les jours reservés
+        $days = $this->getDays();
+
+        $bookingDays = array_map(function($day){
+            return $day->format("Y-m-d");
+        },$days);
+
+        $notAvailable =  array_map(function($day){
+            return $day->format("Y-m-d");
+        },$notAvailableDays);
+
+        foreach($bookingDays as $bookingDay)
+        {
+            if(in_array($bookingDay,$notAvailable))
+            {
+                return false;
+            }
+
+        }
+
+        return true;
+
+
+    }
+
 }

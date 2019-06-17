@@ -17,13 +17,14 @@ class ApplicationType extends AbstractType
      * @param string $class
      * @return array
      */
-    protected function createAttr($label, $placeholder, $class="")
+    protected function createAttr($label, $placeholder, $require = true, $class="")
     {
         return ["label"=> $label,
                 "attr"=> [
                     "class" => $class,
                     "placeholder"=> $placeholder,
-                ]
+                ],
+                "required"=> $require
         ];
     }
 

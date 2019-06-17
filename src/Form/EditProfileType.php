@@ -17,12 +17,12 @@ class EditProfileType extends ApplicationType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', TextType::class, $this->createAttr("Pénom", "Renseigner votre prénom ..."))
-            ->add('lastName', TextType::class, $this->createAttr("Pénom", "Renseigner votre nom ..."))
-            ->add('email', EmailType::class, $this->createAttr("Email", "renseigner votre Email ..."))
-            ->add('picture', UrlType::class, $this->createAttr("Url avatar", "https:// ......"))
-            ->add('introduction', TextType::class, $this->createAttr("Introduction", "Votre introduction...."))
-            ->add('description', TextareaType::class, $this->createAttr("Description", "Votre description détaillée ..."))
+            ->add('firstName', TextType::class, $this->createAttr("Pénom", "Renseigner votre prénom ...", true))
+            ->add('lastName', TextType::class, $this->createAttr("Pénom", "Renseigner votre nom ...", true))
+            ->add('email', EmailType::class, $this->createAttr("Email", "renseigner votre Email ...", true))
+            ->add('picture', UrlType::class, $this->createAttr("Url avatar", "https:// ......", true))
+            ->add('introduction', TextType::class, $this->createAttr("Introduction", "Votre introduction....", true))
+            ->add('description', TextareaType::class, $this->createAttr("Description", "Votre description détaillée ...", true))
         ;
     }
 
