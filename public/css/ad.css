@@ -22,8 +22,8 @@ div.carousel-caption{
 
 .avatar{
     border-radius: 50%;
-    min-height: 128px;
-    min-width: 128px;
+    max-height: 128px;
+    max-width: 128px;
 }
 .avatar-min{
     border-radius: 50%;
