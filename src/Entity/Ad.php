@@ -269,6 +269,37 @@ class Ad
         return $this;
     }
 
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getAd() === $this) {
+                $comment->setAd(null);
+            }
+        }
+
+        return $this;
+    }
+
     // ------------------ fonctions rajoutés ------------------//
 
     /**
@@ -301,33 +332,20 @@ class Ad
     }
 
     /**
-     * @return Collection|Comment[]
+     * calcule la moyenne des note de l'annonce
+     *
+     * @return float
      */
-    public function getComments(): Collection
+    public function getAvgRating()
     {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setAd($this);
+        $sum =0;
+        foreach($this->comments as $comment)
+        {
+            $sum = $sum + $comment->getRating() ;
         }
 
-        return $this;
-    }
+        if(count($this->comments)) return $sum/count($this->comments);
 
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->contains($comment)) {
-            $this->comments->removeElement($comment);
-            // set the owning side to null (unless already changed)
-            if ($comment->getAd() === $this) {
-                $comment->setAd(null);
-            }
-        }
-
-        return $this;
+        return 0 ;
     }
 }

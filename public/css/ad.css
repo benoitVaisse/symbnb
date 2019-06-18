@@ -43,3 +43,7 @@ div.carousel-caption{
 .arrondi{
     border-radius: 5px;
 }
+
+.ratingStar{
+    color : rgb(0, 162, 255);
+}
