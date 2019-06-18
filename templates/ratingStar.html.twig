@@ -3,7 +3,11 @@
         {% if i <= rating %}
             <i class="fas fa-star"></i>
         {% else %}
-            <i class="far fa-star"></i>
+            {% if (i - 0.5) < rating %}
+                <i class="fas fa-star-half-alt"></i>
+            {% else %}
+                <i class="far fa-star"></i>
+            {% endif %}
         {% endif %}
     {% endfor %}
 </span> 
