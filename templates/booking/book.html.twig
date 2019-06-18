@@ -8,30 +8,37 @@
 {% block body %}
 
     <div class="container mt-5">
-        <div>
+        <div class="jumbotron">
             <h3>Reservation pour l'annonce : </h3>
             <h1>{{ ad.title }}</h1>
-            {{form_start(form)}}
-                <div>
-                    <p>Quelles sont les dates a laquelle vous voulez venir ??</p>
-                    <div class="row">
-                        <div class="col">
-                            <div>
-                                {{form_row(form.startDate)}}
+            <div class="my-5">
+                {{form_start(form)}}
+                    <div>
+                        <p>Quelles sont les dates a laquelle vous voulez venir ??</p>
+                        <div class="row">
+                            <div class="col">
+                                <div>
+                                    {{form_row(form.startDate)}}
+                                </div>
+                            </div>
+                            <div class="col">
+                                    {{form_row(form.endDate)}}
                             </div>
                         </div>
-                        <div class="col">
-                                {{form_row(form.endDate)}}
-                        </div>
                     </div>
-                </div>
-                <div>
-                    <h4>Laisser nous un commentaire pour nous dire des informations sur votre arrivé et départ et on s'occupe du reste !! </h4>
-                    {{form_row(form.comment)}}
-                </div>
-
-                <button type="submit" class="btn btn-success">Réserver ! </button>
-            {{form_end(form)}}
+                    <div class="my-3">
+                        <p id="error" style="color:red;"></p>
+                        <h4>Montant du séjour : <span id="amount"> ... </span>&euro; </h4>
+                        <span id="days"> 0 </span> nuit(s) à {{ad.price}} &euro; / nuit
+                    </div>
+                    <div class="mt-5">
+                        <h4>Laisser nous un commentaire pour nous dire des informations sur votre arrivé et départ et on s'occupe du reste !! </h4>
+                        {{form_row(form.comment)}}
+                    </div>
+    
+                    <button type="submit" class="btn btn-success mt-5">Réserver ! </button>
+                {{form_end(form)}}
+            </div>
 
         </div>
 
@@ -52,6 +59,29 @@
             ],
             startDate: new Date()
         });
+    });
+
+
+
+    $("#booking_startDate, #booking_endDate").change(function()
+    {
+        const startDate = new Date($("#booking_startDate").val().replace(/(\d+)\/(\d+)\/(\d{4})/, "$3-$2-$1"));
+        const endDate = new Date($("#booking_endDate").val().replace(/(\d+)\/(\d+)\/(\d{4})/, "$3-$2-$1"));
+        const toto = 3;
+        if(startDate && endDate && startDate< endDate){
+            DAYS_TIME = 24*60*60*1000;
+            days = (endDate.getTime() - startDate.getTime()) /DAYS_TIME ;
+            amount = days * {{ad.price}};
+
+            $("#days").text(days);
+            $("#amount").text(amount);
+            $("#error").text("");
+        }
+        else if(!startDate< endDate && startDate && endDate){
+            $("#days").text("...");
+            $("#amount").text("0");
+            $("#error").text("La date de départ dois être ulterieur a la date d'arrivé pour calculer correctement votre montant a payé !! ");
+        }
     });
 </script>
 
