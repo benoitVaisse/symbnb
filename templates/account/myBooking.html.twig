@@ -10,25 +10,29 @@
             <p>Retrouver ci-dessous les réservations que vous avez effectué </p>
         </div>
         <div class="alert alert-secondary">
-            {% for booking in user.bookings %}
+            {% if user.bookings|length > 0 %}
+                {% for booking in user.bookings %}
 
-                <div class="row my-5">
-                    <div class="col-md-4">
+                    <div class="row my-5">
+                        <div class="col-md-4">
 
-                        <img src="{{booking.ad.coverImage}}" alt="imade de l'annonce {{ booking.ad.title }}" class="img-fluid">
+                            <img src="{{booking.ad.coverImage}}" alt="imade de l'annonce {{ booking.ad.title }}" class="img-fluid">
 
+                        </div>
+                        <div class="col-md-8">
+                            <h4>{{ booking.ad.title }}</h4>
+                            <p>
+                                Réservation n° <strong> {{booking.id}} </strong> <br>
+                                du {{booking.startDate|date("d/m/Y")}} au {{booking.endDate|date("d/m/Y")}} pour {{booking.amount}} &euro;
+                            </p>
+                            <a href="{{ path('booking_show', {'id': booking.id}) }}" class="btn btn-info">Plus d'informations </a>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <h4>{{ booking.ad.title }}</h4>
-                        <p>
-                            Réservation n° <strong> {{booking.id}} </strong> <br>
-                            du {{booking.startDate|date("d/m/Y")}} au {{booking.endDate|date("d/m/Y")}} pour {{booking.amount}} &euro;
-                        </p>
-                        <a href="{{ path('booking_show', {'id': booking.id}) }}" class="btn btn-info">Plus d'informations </a>
-                    </div>
-                </div>
 
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <p>Vous n'avez pas encore fait de reservation !! </p>
+            {% endif %}
         </div>
     </div>
 

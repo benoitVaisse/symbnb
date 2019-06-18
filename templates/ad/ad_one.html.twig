@@ -72,6 +72,20 @@
                 {{ ad.user.description | raw}}
             </div>
         </div>
+
+        <hr>
+        <h2>Commentaires : </h2>
+        {% if ad.comments|length > 0 %}
+            {% for comment in ad.comments %}
+                <div class="bg-light arrondi my-3 py-3 px-3">
+                    <strong>{{ comment.user.fullName }}</strong> a dit : 
+                    <p>{{ comment.content }}</p>
+                    <p>Note : <strong> {{ comment.rating }} / 5 </strong></p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Cette annonces n'a pas encore de commentaires</p>
+        {% endif %}
     </div>
 
     {# modal de confirmation pour supprimer une annonce #}
