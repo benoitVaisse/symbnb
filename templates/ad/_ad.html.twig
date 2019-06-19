@@ -1,7 +1,14 @@
 {% set urlAd = path('ad_one', {'slug':ad.slug}) %}
 <div class="col-md-4">
     <div class="card bg-light mb-3">
-        <div class="card-header"> {{ad.rooms}} chambres <strong> {{ad.price}}&euro; par nuit</strong></div>
+        <div class="card-header text-center"> 
+            {{ad.rooms}} chambres <strong> {{ad.price}}&euro; par nuit</strong> <br>
+            {% if ad.comments|length >0 %}
+                {% include "ratingStar.html.twig" with {"rating" : ad.avgRating} %}
+            {% else %}
+                <small >(pas encore noté)</small>
+            {% endif %}
+        </div>
         <div class="card-body">
             <h4 class="card-title">{{ad.title}}</h4>
             <a href="{{urlAd }}">

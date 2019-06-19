@@ -67,6 +67,27 @@
                 
             </div>
         </div>
+
+        <div class="bg-light mt-5 py-5 px-5" id="comment">
+            <h1>Donner votre Avis !!</h1>
+            {% if date("now") > date(booking.endDate) and not booking.ad.commentFromUser(user) %}
+
+                <div>
+                    {{form_start(form)}}
+                    {{form_row(form.rating)}}
+                    {{form_row(form.content)}}
+                    <button type="submit" class="btn btn-success">Commentez !!</button>
+                    {{form_end(form)}}
+                </div>
+
+            {% elseif booking.ad.commentFromUser(user) %}
+                {% set comment = booking.ad.commentFromUser(user) %}
+                <span> {% include "ratingStar.html.twig" with {"rating": comment.rating} %} </span> <br>
+                <p>{{ comment.content }}</p>
+            {% else %}
+                <p>Vous ne pourrez noter cette Annonce que lorsque votre séjour sera terminé</p>
+            {% endif %}
+        </div>
     </div>
 
 {% endblock %}

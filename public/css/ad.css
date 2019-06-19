@@ -45,5 +45,10 @@ div.carousel-caption{
 }
 
 .ratingStar{
-    color : rgb(0, 162, 255);
+    color : goldenrod;
+}
+
+hr.hrMyBooking{
+    color: black;
+    border-top-color : rgb(122, 122, 122) ;
 }

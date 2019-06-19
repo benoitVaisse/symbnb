@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -347,5 +348,21 @@ class Ad
         if(count($this->comments)) return $sum/count($this->comments);
 
         return 0 ;
+    }
+
+    /**
+     * permet de retourner un commentaire fait par un utilisateur
+     *
+     * @param User $user
+     * @return comment|null
+     */
+    public function getCommentFromUser(User $user)
+    {
+        foreach($this->comments as $comment)
+        {
+            if($comment->getUser() == $user) return $comment;
+        }
+
+        return null;
     }
 }

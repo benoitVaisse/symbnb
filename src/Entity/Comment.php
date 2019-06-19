@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
@@ -32,11 +33,15 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=10, minMessage="Votre commentaire doit faire au moin 10 caractères")
+     * 
      */
     private $content;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThanOrEqual(0, message="Votre note doit être supérieur ou égale à 0")
+     * @Assert\LessThanOrEqual(5, message="Votre note doit être inférieur ou égale à 5")
      */
     private $rating;
 

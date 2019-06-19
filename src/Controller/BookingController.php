@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Entity\Booking;
+use App\Entity\Comment;
 use App\Form\BookingType;
+use App\Form\CommentType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,13 +67,37 @@ class BookingController extends AbstractController
      * @Route("account/booking/{id}", name="booking_show")
      * @Security("is_granted('ROLE_USER') and booking.getUser() == user ")
      * @param Booking $booking
+     * @param Request $request
+     * @param ObjectManager $manager
      * @return Response
      */
-    public function bookingShow(Booking $booking)
+    public function bookingShow(Booking $booking, Request $request, ObjectManager $manager)
     {
+        $comment = new Comment();
+        $user = $this->getUser();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $comment->setUser($user)
+                    ->setAd($booking->getAd());
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            $this->addFlash("success", "Votre commentaire a bien été envoyé !!");
+        }
+        elseif ($form->isSubmitted() && !$form->isValid()){
+            $this->addFlash("danger", "Un Problème est survenue lors de l'envoi de votre commentaire");
+        }
+
+
 
         return $this->render("/booking/show.html.twig", [
             "booking" =>$booking,
+            "form" => $form->createView(),
+            "user" => $user
         ]);
     }
 }
