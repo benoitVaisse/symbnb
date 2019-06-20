@@ -23,12 +23,12 @@
                 {% for ad in ads %}
                     <tr {% if loop.index is odd %} class="table-secondary" {% endif %} >
                         <td>{{ad.id}}</td>
-                        <td> {{ad.title}} </td>
+                        <td> <a target="_blank" href="{{path('ad_one',{'slug':ad.slug})}}">{{ad.title}} </a> </td>
                         <td> <img src="{{ad.user.picture}}" alt="" class="avatar avatar-min"> {{ad.user.fullName}} </td>
                         <td class="text-center"> {{ad.bookings|length}} </td>
                         <td class="text-center"> {{ad.avgRating|number_format(2, ",", " ")}} </td>
                         <td> 
-                            <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                            <a href="{{ path('admin_ad_edit', {'id': ad.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                             <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             
                         </td>

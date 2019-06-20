@@ -1,0 +1,101 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %} Modification de l'annonce numero {{ad.id}} {% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <h1 class="my-5">Modification de l'annonce : <em>{{ad.title}}</em></h1>
+        <div class="clearfix">
+            {{form_start(form)}}
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            Corriger l'annonce
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        {{form_widget(form)}}
+                    </div>
+                    <div class="my-4 px-5">
+                        <button type="submit" class="btn btn-success float-right">
+                            <i class="fas fa-check"></i>
+                            Enregistrer
+                        </button>
+                    </div>
+                </div>
+    
+            {{form_end(form)}}
+        </div>
+
+        <div class="my-5">
+            <div class="card border-light">
+                <div class="card-header">
+                    <h4 class="card-title"> Les Réservations : {{ad.bookings|length}} Réservations</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Voyageur</th>
+                                <th>Date de Réservation</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in ad.bookings %}
+                            <tr {% if loop.index is odd %} class="bg-secondary" {% endif %} >
+                                <td>{{booking.id}}</td>
+                                <td>{{booking.user.fullName}}</td>
+                                <td>{{booking.createdAt|date("d/m/Y")}}</td>
+                                <td>
+                                    <a href="#">
+                                        <i class="btn btn-primary fas fa-pen"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card border-secondary">
+                <div class="card-header">
+                    <h4 class="card-title"> Les Commentaires : {{ad.comments|length}} Commentaires</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Voyageur</th>
+                                <th>commentaire</th>
+                                <th>note</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for comment in ad.comments %}
+                            <tr {% if loop.index is odd %} class="bg-secondary" {% endif %}>
+                                <td>{{comment.id}}</td>
+                                <td>{{comment.user.fullName}}</td>
+                                <td>{{comment.content}}</td>
+                                <td>{{comment.rating}}</td>
+                                <td>
+                                    <a href="#">
+                                        <i class="btn btn-primary fas fa-pen"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
