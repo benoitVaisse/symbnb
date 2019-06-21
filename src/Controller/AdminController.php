@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Entity\Comment;
 use App\Form\AnnonceType;
+use App\Form\AdminCommentType;
 use App\Repository\AdRepository;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -134,7 +136,7 @@ class AdminController extends AbstractController
      *
      * @Route("/admin/comments", name="admin_comments")
      * @param CommentRepository $repoComments
-     * @return void
+     * @return Response
      */
     public function adminComments(CommentRepository $repoComments){
 
@@ -146,4 +148,60 @@ class AdminController extends AbstractController
 
     }
 
+
+    /**
+     * Permet a l'admin de modifier le contenu d'un commentaire
+     *
+     * @Route("/admin/comment/{id}/edit", name="admin_comment_edit")
+     * 
+     * @param Comment $comment
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function editComment(Comment $comment, Request $request, ObjectManager $manager)
+    {
+        $form = $this->createForm(AdminCommentType::class, $comment);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid() )
+        {
+            $manager->persist($comment);
+            $manager->flush();
+
+            $this->addFlash(
+                "success",
+                "le commentaire a bien été modifié "
+            );
+        }
+
+        return $this->render("admin/comments/edit.html.twig", [
+            "comment" => $comment,
+            "form"=>$form->createView()
+        ]);
+
+    }
+
+    /**
+     * permet a la'dmin de supprimer un comentaire
+     * 
+     * @Route("/ad/comment/{id}/delete", name="admin_comment_delete")
+     *
+     * @param Comment $comment
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function deleteComment(Comment $comment, ObjectManager $manager)
+    {
+        $this->addFlash(
+            "success",
+            "le Commentaire numero {$comment->getId()} a bien été supprimé"
+        );
+        
+        $manager->remove($comment);
+        $manager->flush();
+
+
+        return $this->redirectToRoute("admin_comments");
+    }
 }

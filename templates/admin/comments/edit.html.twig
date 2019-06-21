@@ -1,0 +1,37 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %} Modification d'un commentaire {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="card border-light my-5">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-comment"></i>
+                    Modification du commentaire numero {{comment.id}}
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info my-3">
+                    <p>
+                        Id : {{comment.id}} <br>
+                        Annonce liée : {{comment.ad.title}} id : {{comment.ad.id}} <br>
+                        Auteur : {{comment.user.fullName}} <br>
+                        Date de création : {{comment.createdAt|date("d/m/Y H:i")}} <br>
+                        Note : <strong> {{comment.rating}} / 5 </strong>
+                    </p>
+                </div>
+                <div class="alert alert-secondary">
+                    {{form_start(form)}}
+                        {{form_row(form.content)}}
+
+                        <button type="submit" class="btn btn-success flaot-right">Enregistrer</button>
+
+                    {{form_end(form)}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

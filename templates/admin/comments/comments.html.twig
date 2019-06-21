@@ -36,8 +36,8 @@
                                 <td> <strong> <span {% if comment.rating > 2.5 %} style="color:blue" {% else %}style="color:red" {% endif %}   >{{comment.rating}}</span> / 5 </strong> </td>
                                 <td> {{comment.ad.title}} </td>
                                 <td>
-                                    <a href="#" class="btn btn-primary"><i class="fas fa-pen"></i></a>
-                                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                    <a href="{{path('admin_comment_edit', {'id': comment.id})}}" class="btn btn-primary"><i class="fas fa-pen"></i></a>
+                                    <a href="{{path('admin_comment_delete', {'id':comment.id})}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
