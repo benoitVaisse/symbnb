@@ -1,0 +1,50 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %} Gestion des Commentaires {% endblock %}
+
+
+{% block body %}
+
+    <div class="container-fluid my-5">
+        <div class="card border-light">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-comments"></i>
+                    Gestion des Commentaires 
+                </h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>Auteur</th>
+                            <th>Commentaires</th>
+                            <th>Note</th>
+                            <th>Annonce</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comment in comments %}
+                            <tr {% if loop.index is odd %} class="bg-light" {% endif %} >
+                                <td> {{comment.id}} </td>
+                                <td> {{comment.createdAt|date("d/m/Y H:i")}} </td>
+                                <td> <img src="{{comment.user.picture}}" alt="" class="avatar avatar-min"> {{comment.user.fullName}} </td>
+                                <td> {{comment.content}} </td>
+                                <td> <strong> <span {% if comment.rating > 2.5 %} style="color:blue" {% else %}style="color:red" {% endif %}   >{{comment.rating}}</span> / 5 </strong> </td>
+                                <td> {{comment.ad.title}} </td>
+                                <td>
+                                    <a href="#" class="btn btn-primary"><i class="fas fa-pen"></i></a>
+                                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

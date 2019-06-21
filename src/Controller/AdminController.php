@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Form\AnnonceType;
 use App\Repository\AdRepository;
+use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +47,7 @@ class AdminController extends AbstractController
         //.....
     }
 
-    // Section du controller pour les annonces gérées par l'adminitrateur //
+    //------------------------------------------ Section du controller pour les annonces gérées par l'adminitrateur ---------------------------------------------//
 
     /**
      * @Route("/admin/ads", name="admin_ads")
@@ -89,4 +90,60 @@ class AdminController extends AbstractController
             "form"=>$form->createView(),
         ]);
     }
+
+    
+    /**
+     * permet de supprimer une annonces
+     *
+     * @Route("admin/ad/{id}/delete", name="admin_ad_delete")
+     * 
+     * @param Ad $ad
+     * @param ObjectManager $manager
+     * @return void
+     */
+    public function deleteAd(Ad $ad, ObjectManager $manager)
+    {
+        if(count($ad->getBookings()) > 0)
+        {
+            $this->addFlash(
+                "warning",
+                "Vous ne pouvez pas supprimer l'annonce <strong> {$ad->getTitle()} </strong> car elle a déja eu des reservations "
+            );
+        }
+        else{
+            $manager->remove($ad);
+            $manager->flush();
+
+            $this->addFlash(
+                "success",
+                "L'annonce <strong>{$ad->getTitle()}</strong> a bien été supprimé"
+            );
+        }
+
+        return $this->redirectToRoute("admin_ads");
+
+    }
+
+
+
+    //---------------------------------------------------------- Section qui gère les commentaires pour l'admin -----------------------------------------------------------//
+
+
+    /**
+     * permet de lister la liste de tous les commenaires
+     *
+     * @Route("/admin/comments", name="admin_comments")
+     * @param CommentRepository $repoComments
+     * @return void
+     */
+    public function adminComments(CommentRepository $repoComments){
+
+        $comments = $repoComments->findAll();
+
+        return $this->render("/admin/comments/comments.html.twig", [
+            "comments"=>$comments,
+        ]);
+
+    }
+
 }
