@@ -43,6 +43,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                {% include "admin/_pagination.html.twig" with {"route": "admin_comments"} %}
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ use App\Form\AnnonceType;
 use App\Form\AdminBookingType;
 use App\Form\AdminCommentType;
 use App\Repository\AdRepository;
+use App\Service\PaginationService;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -70,14 +71,16 @@ class AdminController extends AbstractController
      * @Route("/admin/ads/{page}", name="admin_ads", requirements={"page"= "\d+"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function index(AdRepository $adRepo, $page = 1)
+    public function index($page = 1, PaginationService $pagination)
     {
-        $limit = 10;
-        // $ads = $adRepo->findAll();
-        $start = ($limit * $page) - $limit;
+        $pagination->setPage($page)
+                    ->setEntityClass(Ad::class)
+                    ->setLimit(10);
 
-        $ads = $adRepo->findBy([], ["id"=>"ASC"], $limit, $start);
-        $nbPage = ceil(count($adRepo->findAll()) / $limit ); 
+        
+
+        $ads = $pagination->getData();
+        $nbPage = $pagination->getNumberPage();
 
         return $this->render('admin/ads/ads.html.twig', [
             "ads"=>$ads ,
@@ -157,16 +160,23 @@ class AdminController extends AbstractController
     /**
      * permet de lister la liste de tous les commenaires
      *
-     * @Route("/admin/comments", name="admin_comments")
+     * @Route("/admin/comments/{page}", name="admin_comments", requirements={"page"= "\d+"})
      * @param CommentRepository $repoComments
      * @return Response
      */
-    public function adminComments(CommentRepository $repoComments){
+    public function adminComments($page = 1,  PaginationService $pagination){
 
-        $comments = $repoComments->findAll();
+        $pagination->setPage($page)
+                    ->setLimit(15)
+                    ->setEntityClass(Comment::class);
+
+        $comments = $pagination->getData();
+        $nbPage = $pagination->getNumberPage();
 
         return $this->render("/admin/comments/comments.html.twig", [
             "comments"=>$comments,
+            "page"=>$page,
+            "nbPage" => $nbPage
         ]);
 
     }
@@ -233,17 +243,24 @@ class AdminController extends AbstractController
 
     /**
      * affiche toutes les réservations effectués sur le site
-     * @Route("/admin/bookings", name="admin_bookings")
+     * @Route("/admin/bookings/{page}", name="admin_bookings", requirements={"page"="\d+"})
      *
      * @return Response
      */
-    public function adminBookings()
+    public function adminBookings($page = 1, PaginationService $pagination)
     {
-        $repo = $this->getDoctrine()->getRepository(Booking::class);
-        $bookings = $repo->findAll();
+
+        $pagination->setPage($page)
+                    ->setLimit(10)
+                    ->setEntityClass(Booking::class);
+
+        $bookings = $pagination->getData();
+        $nbPage = $pagination->getNumberPage();
 
         return $this->render("admin/booking/bookings.html.twig", [
-            "bookings" => $bookings
+            "bookings" => $bookings,
+            "page"=>$page,
+            "nbPage" => $nbPage,
         ]);
     }
 
