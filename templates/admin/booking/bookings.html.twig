@@ -1,0 +1,66 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %} Administration des Réservations {% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+
+        <div class="card border-secondary my-5">
+            <div class="card-header">
+                <h1 class="my-3">
+                    <i class="fas fa-folder"></i>
+                    Administration des réservations
+                </h1>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date de Réservation</th>
+                            <th>Visiteur</th>
+                            <th>Annonce</th>
+                            <th>prix par nuit</th>
+                            <th>Nuit(s)</th>
+                            <th>Date de visite</th>
+                            <th>Prix</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                            <tr {% if loop.index is odd %} class="bg-light" {% endif %}  >
+                                <td>{{ booking.id }}</td>
+                                <td>{{booking.createdAt|date("d/m/Y H:i")}}</td>
+                                <td>
+                                    <img src="{{booking.user.picture}}" alt="" class="avatar avatar-min">
+                                    {{booking.user.fullName}}
+                                </td>
+                                <td>
+                                    {{booking.ad.title}} <br>
+                                    id : {{booking.ad.id}}
+                                </td>
+                                <td>{{ booking.ad.price|number_format(2, ",", " ") }} &euro; </td>
+                                <td>{{ booking.numberDays }}</td>
+                                <td>
+                                    du : {{booking.startDate|date("d/m/Y")}} <br>
+                                    au : {{booking.endDate|date("d/m/Y")}}
+                                </td>
+                                <td>{{booking.amount|number_format(2, ",", " ")}} &euro; </td>
+                                <td>
+                                    <a href="{{path('admin_booking_edit',{'id': booking.id})}}" class="btn btn-primary"><i class="fas fa-pen"></i></a>
+                                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

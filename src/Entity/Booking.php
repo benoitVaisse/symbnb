@@ -34,7 +34,7 @@ class Booking
     /**
      * @ORM\Column(type="datetime")
      * @Assert\Date(message="La date d'arrivée doit être au bon format")
-     * @Assert\GreaterThan("today", message="la date d'arrivé doit être superieur à  la date de aujourd'hui")
+     * @Assert\GreaterThan("today", message="la date d'arrivé doit être superieur à  la date de aujourd'hui", groups={"reservation"})
      */
     private $startDate;
     
@@ -65,15 +65,18 @@ class Booking
      * permet de calculer automatiquement le montant de la reservation et la date de creation de la reservation
      *
      * @ORM\PrePersist
+     * @ORM\PreUpdate
      * 
      * @return void
      */
     public function prepersit()
     {
 
-        $date = new \DateTime();
-        $this->createdAt = $date;
-
+        if(empty($this->createdAt))
+        {
+            $date = new \DateTime();
+            $this->createdAt = $date;
+        }
         
         $this->amount = $this->getNumberDays() * $this->ad->getPrice();
 

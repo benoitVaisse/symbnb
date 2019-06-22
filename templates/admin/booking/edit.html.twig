@@ -1,0 +1,40 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %} Administration et édition des Réservation {% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="card- border-secondary clearfix">
+            <div class="card-header text-align">
+                <h2 class="card-title">
+                    <i class="fas fa-folder"></i>
+                    Modification de la Réservation Numéro {{booking.id}}
+                </h2>
+            </div>
+            {{form_start(form)}}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{form_row(form.startDate)}}
+                        </div>
+                        <div class="col-md-6">
+                            {{form_row(form.endDate)}}
+                        </div>
+                    </div>
+                    <div>
+                        {{form_row(form.comment)}}
+                    </div>
+                    <div class="my-3 py-3 px-3 bg-light">
+                        {{form_row(form.user)}}
+                        {{form_row(form.ad)}}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success float-right mr-5">Modifier le Réservation</button>
+            {{form_end(form)}}
+
+
+        </div>
+    </div>
+
+{% endblock %}

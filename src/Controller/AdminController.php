@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Entity\Booking;
 use App\Entity\Comment;
 use App\Form\AnnonceType;
+use App\Form\AdminBookingType;
 use App\Form\AdminCommentType;
 use App\Repository\AdRepository;
 use App\Repository\CommentRepository;
@@ -18,8 +20,21 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AdminController extends AbstractController
 {
+    //---------------------------------------- Dashboard -------------------------------------------------------------//
 
-    // section pour que l'admin puisse ce connecter et ce deconnecter  //
+
+    /**
+     * affiche le dashboard de l'admin
+     * @Route("/admin/dashboard", name="admin_dashboard")
+     *
+     * @return Response
+     */
+    public function dashboard()
+    {
+        return $this->render("/admin/dashboard.html.twig");
+    }
+
+    //--------------------------------------------------- section pour que l'admin puisse ce connecter et ce deconnecter  ------------------------------------------------------//
 
     /**
      * permet a l'adminnistrateur de ce connecter
@@ -204,4 +219,57 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute("admin_comments");
     }
+
+
+    //----------------------------------------------------- section admin qui gère les Réservations ----------------------------------------------------------//
+
+    /**
+     * affiche toutes les réservations effectués sur le site
+     * @Route("/admin/bookings", name="admin_bookings")
+     *
+     * @return Response
+     */
+    public function adminBookings()
+    {
+        $repo = $this->getDoctrine()->getRepository(Booking::class);
+        $bookings = $repo->findAll();
+
+        return $this->render("admin/booking/bookings.html.twig", [
+            "bookings" => $bookings
+        ]);
+    }
+
+
+    /**
+     * permet de modifier une réservation
+     *
+     * @Route("/admin/booking/{id}/edit", name="admin_booking_edit")
+     * @param Booking $booking
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function editBooking(Booking $booking, Request $request, ObjectManager $manager)
+    {
+        $form = $this->createForm(AdminBookingType::class, $booking);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $manager->persist($booking);
+            $manager->flush();
+
+            $this->addFlash(
+                "success",
+                "Le Réservation numéro {$booking->getId()} a bien été modifiée"
+            );
+
+            return $this->redirectToRoute("admin_bookings");
+        }
+
+        return $this->render("admin/booking/edit.html.twig", [
+            "form"=>$form->createView(),
+            "booking"=>$booking
+        ]);
+    }
+
 }

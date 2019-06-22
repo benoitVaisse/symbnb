@@ -22,6 +22,7 @@ security:
             provider: in_database
 
             form_login:
+                default_target_path: admin_dashboard
                 login_path: admin_login
                 check_path: admin_login
 
