@@ -36,6 +36,23 @@
                 {% endfor %}
             </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+            <div>
+                <ul class="pagination">
+                  <li class="page-item {% if page == 1 %} disabled {% endif %}">
+                    <a class="page-link" href="{{path('admin_ads', {'page': page - 1})}}">&laquo;</a>
+                  </li>
+                  {% for i in 1 .. nbPage %}
+                    <li class="page-item {% if i == page %} active {% endif %} ">
+                        <a class="page-link" href="{{path('admin_ads', {'page': i})}}">{{i}}</a>
+                    </li>
+                  {% endfor %}
+                  <li class="page-item {% if page == nbPage %} disabled {% endif %}">
+                    <a class="page-link" href="{{path('admin_ads', {'page': page + 1})}}">&raquo;</a>
+                  </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

@@ -67,14 +67,22 @@ class AdminController extends AbstractController
     //------------------------------------------ Section du controller pour les annonces gérées par l'adminitrateur ---------------------------------------------//
 
     /**
-     * @Route("/admin/ads", name="admin_ads")
+     * @Route("/admin/ads/{page}", name="admin_ads", requirements={"page"= "\d+"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function index(AdRepository $adRepo)
+    public function index(AdRepository $adRepo, $page = 1)
     {
-        $ads = $adRepo->findAll();
+        $limit = 10;
+        // $ads = $adRepo->findAll();
+        $start = ($limit * $page) - $limit;
+
+        $ads = $adRepo->findBy([], ["id"=>"ASC"], $limit, $start);
+        $nbPage = ceil(count($adRepo->findAll()) / $limit ); 
+
         return $this->render('admin/ads/ads.html.twig', [
-            "ads"=>$ads
+            "ads"=>$ads ,
+            "nbPage" => $nbPage,
+            "page"=>$page
         ]);
     }
 
