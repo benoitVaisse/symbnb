@@ -28,7 +28,8 @@ class UserRepository extends ServiceEntityRepository
                     ->groupBy("u")
                     ->orderBy("avgRatings", "DESC")
                     ->setMaxResults($limit)
-                    ->getQuery()->getResult();
+                    ->getQuery()
+                    ->getResult();
     }
 
     // /**
