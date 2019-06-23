@@ -28,7 +28,7 @@ class AdminController extends AbstractController
 
     /**
      * affiche le dashboard de l'admin
-     * @Route("/admin/dashboard", name="admin_dashboard")
+     * @Route("/admin", name="admin_dashboard")
      *
      * @return Response
      */

@@ -24,33 +24,25 @@
 
         <h2>Nos appartements stars</h2>
         <div class="row my-5">
-            {% for i in 1..3 %}
-            <div class="col-md-4">
-                <div class="card text-white bg-primary mb-3">
-                    <div class="card-header">maison 3 chambres <strong> 45&euro; par nuit</strong></div>
-                    <div class="card-body">
-                        <h4 class="card-title">Appartement de ouf</h4>
-                        <img src="http://placehold.it/350x150" alt="" style="width: 100%;">
-                        <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis veniam sapiente consectetur provident laboriosam sequi! Quisquam natus provident mollitia architecto?</p>
-                        <a href="#" class="btn btn-secondary">Voir l'annonce</a>
-                    </div>
-                </div>
-            </div>
+            {% for ad in bestAds %}
+            
+               {% include "ad/_ad.html.twig" with {"ad": ad.ad} %}
+           
             {% endfor %}
         </div>
         <hr>
         <h2 class="my-5">Nos Super proprietaires </h2>
         <div class="row">
-            {% for j in 1..2 %}
+            {% for user in bestUsers %}
                 <div class="col-md-6">
                     <div class="card text-white bg-info mb-3">
                         <div class="card-body">
-                            <h4 class="card-title">Benoit vaisse</h4>
+                            <h4 class="card-title">{{user.user.fullName}}</h4>
                             <hr>
                             <div class="card-text">
-                                <img src="http://placehold.it/64x64" class="float-left mr-3"alt="">
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum aperiam labore animi, minus excepturi officiis obcaecati eligendi rerum quos temporibus.</p>
-                                <a href="#" class="btn btn-secondary float-right">En savoir plus !</a>
+                                <img src="{{user.user.picture}}" class="float-left mr-3 avatar"alt="">
+                                <p>{{user.user.introduction}}</p>
+                                <a href="{{path('user_show', {'slug':user.user.slug})}}" class="btn btn-secondary float-right">En savoir plus !</a>
                             </div>
                         </div>
                     </div>

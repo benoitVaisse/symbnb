@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\AdRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomePageController extends AbstractController
 {
@@ -13,9 +15,17 @@ class HomePageController extends AbstractController
      * 
      * @return reponse
      */
-    public function index()
+    public function index(AdRepository $adRepo, UserRepository $userRepo)
     {
-        return $this->render('home_page/index.html.twig', []);
+
+        $bestAds = $adRepo->findBestAds(3);
+        $bestUsers = $userRepo->findBestUsers(2);
+        dump($bestUsers);
+
+        return $this->render('home_page/index.html.twig', [
+            "bestAds" => $bestAds,
+            "bestUsers" => $bestUsers
+        ]);
     }
 
 }
