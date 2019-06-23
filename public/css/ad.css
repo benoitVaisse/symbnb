@@ -52,3 +52,15 @@ hr.hrMyBooking{
     color: black;
     border-top-color : rgb(122, 122, 122) ;
 }
+
+div.tailleCard{
+    min-height: 125px;
+}
+
+a.dashboard{
+    text-decoration: none;
+    color: white;
+}
+a.dashboard:hover{
+    text-decoration: underline;
+}

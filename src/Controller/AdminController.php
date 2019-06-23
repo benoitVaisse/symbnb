@@ -10,6 +10,8 @@ use App\Form\AdminBookingType;
 use App\Form\AdminCommentType;
 use App\Repository\AdRepository;
 use App\Service\PaginationService;
+use App\Service\StatistiqueService;
+use App\Repository\BookingRepository;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -30,9 +32,19 @@ class AdminController extends AbstractController
      *
      * @return Response
      */
-    public function dashboard()
+    public function dashboard(StatistiqueService $stat)
     {
-        return $this->render("/admin/dashboard.html.twig");
+        //select AVG(comment.rating), user.last_name FROM ad , comment, user where comment.ad_id = ad.id and ad.user_id = user.id GROUP BY user.last_name
+
+        $statDasboard = $stat->getStat();
+        $lessAds = $stat->getStatsAds("ASC");
+        $bestAds = $stat->getStatsAds("DESC");
+
+        return $this->render("/admin/dashboard.html.twig",[
+            "data" => $statDasboard,
+            "bastAds" => $bestAds,
+            "lessAds" => $lessAds
+        ]);
     }
 
     //--------------------------------------------------- section pour que l'admin puisse ce connecter et ce deconnecter  ------------------------------------------------------//
@@ -247,7 +259,7 @@ class AdminController extends AbstractController
      *
      * @return Response
      */
-    public function adminBookings($page = 1, PaginationService $pagination)
+    public function adminBookings($page = 1, PaginationService $pagination, BookingRepository $repo)
     {
 
         $pagination->setPage($page)
@@ -256,11 +268,13 @@ class AdminController extends AbstractController
 
         $bookings = $pagination->getData();
         $nbPage = $pagination->getNumberPage();
+        $total = count($repo->findAll());
 
         return $this->render("admin/booking/bookings.html.twig", [
             "bookings" => $bookings,
             "page"=>$page,
             "nbPage" => $nbPage,
+            "total"=>$total
         ]);
     }
 
