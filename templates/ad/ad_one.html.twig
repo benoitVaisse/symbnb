@@ -6,8 +6,8 @@
 
 {% block body %}
 
-    <div class="ad_title" style="background-image: url( {{ad.coverImage}} )">
-        <div class="container">
+    <div class="ad_title" {% if ad.imageName %} style="background-image: url('../../{{vich_uploader_asset(ad,'imageFile')}}')" {% else %} style="background-image: url( {{ad.coverImage}})" {% endif %} >
+        <div class="container my-5">
             <h1>{{ad.title}} </h1>
             <p>{{ad.introduction}} </p>
             <p class="h2">

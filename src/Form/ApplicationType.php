@@ -47,6 +47,17 @@ class ApplicationType extends AbstractType
                 "widget"=> $widget
         ];
     }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    protected function ckEditorOption()
+    {
+        return ['config_name' => 'full_config',
+        ];
+    }
 }
 
 

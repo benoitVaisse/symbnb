@@ -12,7 +12,11 @@
         <div class="card-body">
             <h4 class="card-title">{{ad.title}}</h4>
             <a href="{{urlAd }}">
-                <img src="{{ad.coverImage}}" alt="" style="width: 100%;">
+                {% if ad.imageName %}
+                    <img src="{{vich_uploader_asset(ad, 'imageFile')}}" alt="" style="width: 100%;">
+                {% else %}
+                    <img src="{{ad.coverImage}}" alt="" style="width: 100%;">
+                {% endif %}
             </a>
             <p class="card-text">{{ad.introduction|raw}}</p>
             <a href="{{urlAd}}" class="btn btn-primary mb-auto">Voir l'annonce</a>
