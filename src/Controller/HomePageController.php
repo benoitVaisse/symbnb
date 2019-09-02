@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\AdRepository;
 use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -15,8 +16,11 @@ class HomePageController extends AbstractController
      * 
      * @return reponse
      */
-    public function index(AdRepository $adRepo, UserRepository $userRepo)
+    public function index(AdRepository $adRepo, UserRepository $userRepo, Request $request)
     {
+        $local = "";
+        $local = $request->getLocale();
+        dump($local);
 
         $bestAds = $adRepo->findBestAds(3);
         $bestUsers = $userRepo->findBestUsers(2);
