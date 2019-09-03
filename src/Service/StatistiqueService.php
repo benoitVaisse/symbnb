@@ -69,6 +69,11 @@ class StatistiqueService {
                                     ORDER BY rating ".$ordre)->setMaxResults(5)->getResult();
     }
 
+
+    public function calculate($a, $b){
+        return $a*$b;
+    }
+
 }
 
 
