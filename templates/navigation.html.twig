@@ -12,6 +12,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{path('ads_liste')}}">Annonces</a>
             </li>
+            <li>
+                <div class="dropdown show">
+                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{"language_button"|trans|capitalize}}
+                    </a>
+                    
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="{{path(app.request.attributes.get('_route'), app.request.get('_route_params')|merge({'_locale':'fr'}))}}">{{"language.fr"|trans}}</a>
+                      <a class="dropdown-item" href="{{path(app.request.attributes.get('_route'), app.request.get('_route_params')|merge({'_locale':'en'}))}}">{{"language.en"|trans}}</a>
+                    </div>
+                  </div>
+            </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             {% if app.user %}

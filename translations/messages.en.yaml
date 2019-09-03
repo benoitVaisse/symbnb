@@ -1,0 +1,9 @@
+title:
+  welcome: "Welcome to SymBnB"
+ad:
+  listing: "Ad's Listing !!"
+
+language_button: "Choose language"
+language:
+  fr: "fr"
+  en: "en"

@@ -1,2 +1,10 @@
 title:
   welcome: "Bienvenue sur SymBnB"
+
+ad:
+  listing: "Liste des annonces !!"
+
+language_button: "Choix de la langue"
+language:
+  fr: "fr"
+  en: "en"

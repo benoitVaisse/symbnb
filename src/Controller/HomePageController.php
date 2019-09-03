@@ -13,7 +13,6 @@ class HomePageController extends AbstractController
     /**
      * fonction qui affiche la page d'accueil du site
      * @Route("/", name="home_page")
-     * 
      * @return reponse
      */
     public function index(AdRepository $adRepo, UserRepository $userRepo, Request $request)
