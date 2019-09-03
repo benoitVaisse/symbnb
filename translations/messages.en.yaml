@@ -7,3 +7,7 @@ language_button: "Choose language"
 language:
   fr: "fr"
   en: "en"
+  de: "de"
+
+btn:
+  confirm: "confirm"

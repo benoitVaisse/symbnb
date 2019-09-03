@@ -1,0 +1,13 @@
+title:
+  welcome: "Willkommen bei SymBnB"
+ad:
+  listing: "Liste unserer Anonzen !!"
+
+language_button: "Sprache wählen"
+language:
+  fr: "fr"
+  en: "en"
+  de: "de"
+
+btn:
+  confirm: "bestätigen"
