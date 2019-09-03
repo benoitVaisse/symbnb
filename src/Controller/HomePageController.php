@@ -17,14 +17,10 @@ class HomePageController extends AbstractController
      */
     public function index(AdRepository $adRepo, UserRepository $userRepo, Request $request)
     {
-        $local = "";
-        $local = $request->getLocale();
-        dump($local);
 
         $bestAds = $adRepo->findBestAds(3);
         $bestUsers = $userRepo->findBestUsers(2);
-        dump($bestUsers);
-
+        
         return $this->render('home_page/index.html.twig', [
             "bestAds" => $bestAds,
             "bestUsers" => $bestUsers
