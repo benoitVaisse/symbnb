@@ -6,7 +6,7 @@ controllers:
     # this is added to the beginning of all imported route names
     # these requirements are added to all imported routes
     requirements:
-        locale: 'en|es|fr'
+        locale: 'en|de|fr'
     # An imported route with an empty URL will become "/blog/"
     # Uncomment this option to make that URL "/blog" instead
     # trailing_slash_on_root: false

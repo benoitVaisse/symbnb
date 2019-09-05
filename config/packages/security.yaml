@@ -17,7 +17,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         admin:
-            pattern: ^/admin
+            pattern: ^/(en|fr|de)/admin
             anonymous: true
             provider: in_database
 
@@ -52,6 +52,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         
-        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(en|fr|de)/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(en|fr|de)/admin, roles: ROLE_ADMIN }
+        # - { path: ^/[a-zA-Z]{2}_[a-zA-Z]{2}/admin, roles: ROLE_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
