@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Entity\Image;
 use App\Form\AnnonceType;
+use App\Service\EmailService;
 use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -37,7 +38,7 @@ class AdController extends AbstractController
      *@IsGranted("ROLE_USER", statusCode=404, message="Veuillez vous Connecter pour créer une Annonce")
      * @return Response
      */
-    public function createAd(objectManager $manager, Request $request)
+    public function createAd(objectManager $manager, Request $request, EmailService $mailService)
     {
         $ad = new Ad();
         // $img = new Image();
@@ -45,6 +46,7 @@ class AdController extends AbstractController
         //     ->setCaption("description 1");
         
         // $ad->addImage($img);
+        $user = $this->getUser();
         $form = $this->createForm(AnnonceType::class, $ad);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
@@ -54,9 +56,11 @@ class AdController extends AbstractController
                 $image->setAd($ad);
                 $manager->persist($image);
             }
-            $ad->setUser($this->getUser());
+            $ad->setUser($user);
             $manager->persist($ad);
             $manager->flush();
+
+            $mailService->sendAdminNewAd($ad, $user);
 
             $this->addFlash(
                 "success",
