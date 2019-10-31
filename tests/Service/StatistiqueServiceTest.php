@@ -37,7 +37,7 @@ class StatistiqueServiceTest extends KernelTestCase
         $calculator = new StatistiqueService( $this->entityManager);
         
         $result = $calculator->getAdStat();
-        $this->assertEquals(31, $result);
+        $this->assertEquals(36, $result);
 
     }
 }
