@@ -46,3 +46,7 @@ $("#modalAdDelete").on("show.bs.modal", function(e){
     $("#adName").html(title);
     $("#btn-delete").attr("href",href);
 })
+
+function test(){
+    
+}
