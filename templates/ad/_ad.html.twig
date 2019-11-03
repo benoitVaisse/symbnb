@@ -13,7 +13,7 @@
             <h4 class="card-title">{{ad.title}}</h4>
             <a href="{{urlAd }}">
                 {% if ad.imageName %}
-                    <img src="{{vich_uploader_asset(ad, 'imageFile')}}" alt="" style="width: 100%;">
+                    <img src="/{{vich_uploader_asset(ad, 'imageFile')}}" alt="" style="width: 100%;">
                 {% else %}
                     <img src="{{ad.coverImage}}" alt="" style="width: 100%;">
                 {% endif %}
